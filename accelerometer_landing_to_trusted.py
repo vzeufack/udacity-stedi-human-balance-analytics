@@ -26,11 +26,11 @@ DEFAULT_DATA_QUALITY_RULESET = """
     ]
 """
 
-# Script generated for node Accelerometer Landing
-AccelerometerLanding_node1763643575336 = glueContext.create_dynamic_frame.from_catalog(database="stedi", table_name="accelerometer_landing", transformation_ctx="AccelerometerLanding_node1763643575336")
-
 # Script generated for node Customer Trusted
 CustomerTrusted_node1763643612782 = glueContext.create_dynamic_frame.from_catalog(database="stedi", table_name="customer_trusted", transformation_ctx="CustomerTrusted_node1763643612782")
+
+# Script generated for node Accelerometer Landing
+AccelerometerLanding_node1763643575336 = glueContext.create_dynamic_frame.from_catalog(database="stedi", table_name="accelerometer_landing", transformation_ctx="AccelerometerLanding_node1763643575336")
 
 # Script generated for node Join
 Join_node1763643636093 = Join.apply(frame1=CustomerTrusted_node1763643612782, frame2=AccelerometerLanding_node1763643575336, keys1=["email"], keys2=["user"], transformation_ctx="Join_node1763643636093")
@@ -43,7 +43,7 @@ where timestamp >= shareWithResearchAsOfDate;
 Privacyfilter_node1763643992315 = sparkSqlQuery(glueContext, query = SqlQuery0, mapping = {"myDataSource":Join_node1763643636093}, transformation_ctx = "Privacyfilter_node1763643992315")
 
 # Script generated for node Drop Fields
-DropFields_node1763644123709 = DropFields.apply(frame=Privacyfilter_node1763643992315, paths=["birthDay", "shareWithPublicAsOfDate", "shareWithResearchAsOfDate", "registrationDate", "customerName", "shareWithFriendsAsOfDate", "timestamp", "email", "lastUpdateDate", "phone", "serialNumber"], transformation_ctx="DropFields_node1763644123709")
+DropFields_node1763644123709 = DropFields.apply(frame=Privacyfilter_node1763643992315, paths=["birthDay", "shareWithPublicAsOfDate", "shareWithResearchAsOfDate", "registrationDate", "customerName", "shareWithFriendsAsOfDate", "email", "lastUpdateDate", "phone", "serialNumber"], transformation_ctx="DropFields_node1763644123709")
 
 # Script generated for node Amazon S3
 EvaluateDataQuality().process_rows(frame=DropFields_node1763644123709, ruleset=DEFAULT_DATA_QUALITY_RULESET, publishing_options={"dataQualityEvaluationContext": "EvaluateDataQuality_node1763643375558", "enableDataQualityResultsPublishing": True}, additional_options={"dataQualityResultsPublishing.strategy": "BEST_EFFORT", "observations.scope": "ALL"})
