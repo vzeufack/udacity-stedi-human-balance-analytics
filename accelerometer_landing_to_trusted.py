@@ -30,10 +30,10 @@ DEFAULT_DATA_QUALITY_RULESET = """
 CustomerTrusted_node1763643612782 = glueContext.create_dynamic_frame.from_catalog(database="stedi", table_name="customer_trusted", transformation_ctx="CustomerTrusted_node1763643612782")
 
 # Script generated for node Accelerometer Landing
-AccelerometerLanding_node1763643575336 = glueContext.create_dynamic_frame.from_catalog(database="stedi", table_name="accelerometer_landing", transformation_ctx="AccelerometerLanding_node1763643575336")
+AccelerometerLanding_node1764272553217 = glueContext.create_dynamic_frame.from_options(format_options={"multiLine": "false"}, connection_type="s3", format="json", connection_options={"paths": ["s3://stedi-lake-house/accelerometer/landing/"], "recurse": True}, transformation_ctx="AccelerometerLanding_node1764272553217")
 
 # Script generated for node Join
-Join_node1763643636093 = Join.apply(frame1=CustomerTrusted_node1763643612782, frame2=AccelerometerLanding_node1763643575336, keys1=["email"], keys2=["user"], transformation_ctx="Join_node1763643636093")
+Join_node1763643636093 = Join.apply(frame1=CustomerTrusted_node1763643612782, frame2=AccelerometerLanding_node1764272553217, keys1=["email"], keys2=["user"], transformation_ctx="Join_node1763643636093")
 
 # Script generated for node Privacy filter
 SqlQuery0 = '''
