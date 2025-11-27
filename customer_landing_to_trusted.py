@@ -27,14 +27,14 @@ DEFAULT_DATA_QUALITY_RULESET = """
 """
 
 # Script generated for node Customer Landing
-CustomerLanding_node1763642550752 = glueContext.create_dynamic_frame.from_catalog(database="stedi", table_name="customer_landing", transformation_ctx="CustomerLanding_node1763642550752")
+CustomerLanding_node1764272121236 = glueContext.create_dynamic_frame.from_options(format_options={"multiLine": "false"}, connection_type="s3", format="json", connection_options={"paths": ["s3://stedi-lake-house/customer/landing/"], "recurse": True}, transformation_ctx="CustomerLanding_node1764272121236")
 
 # Script generated for node Privacy Filter
 SqlQuery0 = '''
 select * from myDataSource
 where shareWithResearchAsOfDate IS NOT NULL;
 '''
-PrivacyFilter_node1763642586549 = sparkSqlQuery(glueContext, query = SqlQuery0, mapping = {"myDataSource":CustomerLanding_node1763642550752}, transformation_ctx = "PrivacyFilter_node1763642586549")
+PrivacyFilter_node1763642586549 = sparkSqlQuery(glueContext, query = SqlQuery0, mapping = {"myDataSource":CustomerLanding_node1764272121236}, transformation_ctx = "PrivacyFilter_node1763642586549")
 
 # Script generated for node Customer Trusted
 EvaluateDataQuality().process_rows(frame=PrivacyFilter_node1763642586549, ruleset=DEFAULT_DATA_QUALITY_RULESET, publishing_options={"dataQualityEvaluationContext": "EvaluateDataQuality_node1763548595888", "enableDataQualityResultsPublishing": True}, additional_options={"dataQualityResultsPublishing.strategy": "BEST_EFFORT", "observations.scope": "ALL"})
