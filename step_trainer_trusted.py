@@ -26,18 +26,18 @@ DEFAULT_DATA_QUALITY_RULESET = """
     ]
 """
 
-# Script generated for node Step Trainer Landing
-StepTrainerLanding_node1764066688994 = glueContext.create_dynamic_frame.from_catalog(database="stedi", table_name="step_trainer_landing", transformation_ctx="StepTrainerLanding_node1764066688994")
-
 # Script generated for node Customer Curated
 CustomerCurated_node1764067056837 = glueContext.create_dynamic_frame.from_catalog(database="stedi", table_name="customer_curated", transformation_ctx="CustomerCurated_node1764067056837")
+
+# Script generated for node Step Trainer Landing
+StepTrainerLanding_node1764272918396 = glueContext.create_dynamic_frame.from_options(format_options={"multiLine": "false"}, connection_type="s3", format="json", connection_options={"paths": ["s3://stedi-lake-house/step_trainer/landing/"], "recurse": True}, transformation_ctx="StepTrainerLanding_node1764272918396")
 
 # Script generated for node SQL Query
 SqlQuery0 = '''
 select * from step_trainer
 WHERE serialnumber IN (SELECT serialnumber FROM customer)
 '''
-SQLQuery_node1764075098808 = sparkSqlQuery(glueContext, query = SqlQuery0, mapping = {"step_trainer":StepTrainerLanding_node1764066688994, "customer":CustomerCurated_node1764067056837}, transformation_ctx = "SQLQuery_node1764075098808")
+SQLQuery_node1764075098808 = sparkSqlQuery(glueContext, query = SqlQuery0, mapping = {"customer":CustomerCurated_node1764067056837, "step_trainer":StepTrainerLanding_node1764272918396}, transformation_ctx = "SQLQuery_node1764075098808")
 
 # Script generated for node Step Trainer Trusted
 EvaluateDataQuality().process_rows(frame=SQLQuery_node1764075098808, ruleset=DEFAULT_DATA_QUALITY_RULESET, publishing_options={"dataQualityEvaluationContext": "EvaluateDataQuality_node1764066675530", "enableDataQualityResultsPublishing": True}, additional_options={"dataQualityResultsPublishing.strategy": "BEST_EFFORT", "observations.scope": "ALL"})
