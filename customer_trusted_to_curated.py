@@ -35,26 +35,19 @@ AccelerometerTrusted_node1763643575336 = glueContext.create_dynamic_frame.from_c
 # Script generated for node Join
 Join_node1763643636093 = Join.apply(frame1=CustomerTrusted_node1763643612782, frame2=AccelerometerTrusted_node1763643575336, keys1=["email"], keys2=["user"], transformation_ctx="Join_node1763643636093")
 
-# Script generated for node Privacy filter
-SqlQuery0 = '''
-select * from myDataSource
-where timestamp >= shareWithResearchAsOfDate;
-'''
-Privacyfilter_node1763643992315 = sparkSqlQuery(glueContext, query = SqlQuery0, mapping = {"myDataSource":Join_node1763643636093}, transformation_ctx = "Privacyfilter_node1763643992315")
-
 # Script generated for node Drop fields and remove duplicates
-SqlQuery1 = '''
+SqlQuery0 = '''
 select distinct customername, phone, birthday,
 serialnumber, registrationdate, lastupdatedate,
 sharewithresearchasofdate, sharewithpublicasofdate,
 sharewithfriendsasofdate from myDataSource
 '''
-Dropfieldsandremoveduplicates_node1763989137741 = sparkSqlQuery(glueContext, query = SqlQuery1, mapping = {"myDataSource":Privacyfilter_node1763643992315}, transformation_ctx = "Dropfieldsandremoveduplicates_node1763989137741")
+Dropfieldsandremoveduplicates_node1763989137741 = sparkSqlQuery(glueContext, query = SqlQuery0, mapping = {"myDataSource":Join_node1763643636093}, transformation_ctx = "Dropfieldsandremoveduplicates_node1763989137741")
 
-# Script generated for node Amazon S3
+# Script generated for node Customer Curated
 EvaluateDataQuality().process_rows(frame=Dropfieldsandremoveduplicates_node1763989137741, ruleset=DEFAULT_DATA_QUALITY_RULESET, publishing_options={"dataQualityEvaluationContext": "EvaluateDataQuality_node1763643375558", "enableDataQualityResultsPublishing": True}, additional_options={"dataQualityResultsPublishing.strategy": "BEST_EFFORT", "observations.scope": "ALL"})
-AmazonS3_node1763644235527 = glueContext.getSink(path="s3://stedi-lake-house/customer/curated/", connection_type="s3", updateBehavior="UPDATE_IN_DATABASE", partitionKeys=[], enableUpdateCatalog=True, transformation_ctx="AmazonS3_node1763644235527")
-AmazonS3_node1763644235527.setCatalogInfo(catalogDatabase="stedi",catalogTableName="customer_curated")
-AmazonS3_node1763644235527.setFormat("json")
-AmazonS3_node1763644235527.writeFrame(Dropfieldsandremoveduplicates_node1763989137741)
+CustomerCurated_node1763644235527 = glueContext.getSink(path="s3://stedi-lake-house/customer/curated/", connection_type="s3", updateBehavior="UPDATE_IN_DATABASE", partitionKeys=[], enableUpdateCatalog=True, transformation_ctx="CustomerCurated_node1763644235527")
+CustomerCurated_node1763644235527.setCatalogInfo(catalogDatabase="stedi",catalogTableName="customer_curated")
+CustomerCurated_node1763644235527.setFormat("json")
+CustomerCurated_node1763644235527.writeFrame(Dropfieldsandremoveduplicates_node1763989137741)
 job.commit()
