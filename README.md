@@ -70,23 +70,25 @@ contains the following fields:
 - z
 
 ## Workflow
-<img width="2488" height="1268" alt="image" src="https://github.com/user-attachments/assets/786e3a67-8686-4502-b449-f99de298bf1e" />
+<img width="2648" height="1268" alt="image" src="https://github.com/user-attachments/assets/e2f72fc0-d402-4447-ab23-00ef9e19751e" />
 
 ### Landing zones
 
 The following scripts contain the DDL to create the landing zone tables. The data was copied from the original Git repo to those tables:
 - **customer_landing.sql**
 
-  <img width="797" height="642" alt="image" src="https://github.com/user-attachments/assets/95fc668b-9eda-4e2e-9637-4dc51cec10fe" />
+  <img width="1845" height="618" alt="customer_landing" src="https://github.com/user-attachments/assets/c0e7f9f3-7f15-472f-9c67-750907dd06d0" />
   <img width="1387" height="793" alt="image" src="https://github.com/user-attachments/assets/d97c4475-8b0e-4a0f-b96e-62c009b80bf1" />
   
 - **accelerometer_landing.sql**
   
-  <img width="627" height="637" alt="image" src="https://github.com/user-attachments/assets/47787cb2-7d47-458a-b871-abbe8c9d8b7d" />
+  <img width="1857" height="650" alt="accelerometer_landing" src="https://github.com/user-attachments/assets/284852a3-4631-4cc4-bb5c-b7b9e7fd865b" />
+
 
 - **step_trainer_landing.sql**
   
-  <img width="766" height="646" alt="image" src="https://github.com/user-attachments/assets/dc2e04c1-a5a9-40b8-9d7c-08c612ad2045" />
+  <img width="1846" height="686" alt="step_trainer_landing" src="https://github.com/user-attachments/assets/c0a33999-423c-46bb-b541-9a93256be00f" />
+
 
 
 ### Trusted and curated zones
@@ -99,22 +101,22 @@ The following scripts contain the DDL to create the landing zone tables. The dat
 - **accelerometer_landing_to_trusted.py**
 
   Has a node that inner joins the customer_trusted data with the accelerometer_landing data by emails. The produced table should have only columns from the accelerometer table
-  <img width="2550" height="921" alt="image" src="https://github.com/user-attachments/assets/c058ea83-9e56-4a0c-8227-6d9929fbd243" />
-  <img width="1820" height="541" alt="image" src="https://github.com/user-attachments/assets/8bde2f7e-e5df-494c-84f5-f66f50c935b4" />
+  <img width="1572" height="771" alt="image" src="https://github.com/user-attachments/assets/9238a13a-b341-43aa-a3d4-b0028f4aa8d3" />
+  <img width="1873" height="627" alt="image" src="https://github.com/user-attachments/assets/e7e15cd7-61b3-4192-9068-e1dd56a1590b" />
 
 
 - **customer_trusted_to_curated.py**
 
   Has a node that inner joins the customer_trusted data with the accelerometer_trusted data by emails. The produced table should have only columns from the customer table.
-  <img width="1884" height="679" alt="image" src="https://github.com/user-attachments/assets/cdddda37-911d-466d-a5ed-5ef2c5d5f5ce" />
-  <img width="1863" height="677" alt="image" src="https://github.com/user-attachments/assets/0284842b-73d8-4d93-bb18-cabc2c5c484a" />
-
+  <img width="1572" height="708" alt="image" src="https://github.com/user-attachments/assets/4a1d74c9-4c2e-4821-9874-85f3753e210e" />
+  <img width="1856" height="623" alt="image" src="https://github.com/user-attachments/assets/afb98563-41cd-4ac5-b3e6-ed1ea346d7d8" />
+  
 
 - **step_trainer_trusted.py**
 
   Has a node that inner joins the step_trainer_landing data with the customer_curated data by serial numbers
-  <img width="1892" height="739" alt="image" src="https://github.com/user-attachments/assets/f0a923d1-fd51-4282-a0f3-3b2f8726f5e7" />
-  <img width="1852" height="690" alt="image" src="https://github.com/user-attachments/assets/89621462-280e-4d49-993b-ebb4b6667ed5" />
+  <img width="1588" height="675" alt="image" src="https://github.com/user-attachments/assets/1374917c-9c6e-422e-a7bc-2476d3306678" />
+  <img width="1841" height="607" alt="image" src="https://github.com/user-attachments/assets/1710eb69-c620-4720-ae83-3bf30c752b56" />
 
 
 - **machine_learning_curated.py**
